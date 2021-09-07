@@ -1,0 +1,56 @@
+image: python:3.6
+
+before_script:
+  - pip install -r requirements-test.txt
+
+stages:
+  - test_and_style
+#- type # this is BETA
+#- linting # latest stage because this is BETA, and just a plus for student
+
+check_pep8:
+  stage: test_and_style
+  script:
+    - cd /builds/pyfml/pyfml && make style
+  except:
+    - /^elixir.*/
+
+unittest:
+  stage: test_and_style
+  script:
+    - cd /builds/pyfml/pyfml && make test
+  except:
+    - /^elixir.*/
+
+#type:
+#  stage: type
+#  script:
+#    - cd /builds/pyfml/pyfml && make type || true
+#  except:
+#    - /^elixir.*/
+
+#pylint:
+#  stage: linting
+#  script:
+#    - cd /builds/pyfml/pyfml && make lint
+#  except:
+#    - /^elixir.*/
+#
+#security_check:
+#  stage: linting
+#  script:
+#    - cd /builds/pyfml/pyfml && make sec || true
+#  except:
+#    - /^elixir.*/
+
+mixtest:
+  stage: test_and_style
+  image: elixir:1.10
+  only:
+    refs:
+      - /^elixir.*/
+  before_script:
+    - echo $CI_COMMIT_MESSAGE
+    - apt-get update && apt-get install -y erlang-xmerl
+  script:
+    - cd /builds/pyfml/pyfml/langs/elixir/pymi && mix local.rebar --force && mix local.hex --force && mix deps.get && mix test

@@ -1,0 +1,248 @@
+9. Crawling
+===========
+
+Từ chương này, bài làm sau khi chỉnh sửa sạch sẽ, có thể đưa lên GitHub
+để tạo profile đẹp cho học viên, tiện cho xin việc sau này.
+
+- Đăng ký GitHub rồi tạo repo và push code lên, xem thêm hướng dẫn tại
+  https://pymivn.github.io/vinagit/ và https://help.github.com/
+- Dùng GitHub là gợi ý cho các học viên muốn trở thành lập trình viên
+  và xin việc lập trình sau khi làm, không bắt buộc.
+- WebAPI (hay gọi tắt là API), là các website trả về string thường ở JSON format,
+  dùng để gửi/nhận dữ liệu, lập trình viên chỉ cần truy cập rồi json.loads là
+  có dữ liệu trong Python (thay vì phải xử lý HTML).
+  Các dịch vụ cung cấp API sẽ có tài liệu hướng dẫn cách dùng cụ thể với từng
+  endpoint (đường dẫn). Ví dụ API của GitLab https://gitlab.com/api/v4/projects/pyfml%2Fpyfml/issues
+  có tài liệu tại https://docs.gitlab.com/ee/api/issues.html#list-project-issues
+- Các API có thể yêu cầu người dùng tạo tài khỏan (có thể yêu cầu nhập thẻ tín dụng để thanh toán) và sử dụng "token". Token
+  là một string dài, cấp cho người dùng để họ dùng với code, chứng minh mình là
+  một user hợp lệ (thay vì dùng username/password truyền thống).
+  Với các public API không bắt buộc dùng token, khi sử dụng token, user sẽ
+  thường có quyền truy cập API nhiều request/ngày hơn so với không dùng.
+- Token hay user/password là những thông tin cần được bảo mật, không viết vào
+  code rồi push lên mạng - sử dụng file text để chứa thông tin (JSON/text/YAML
+  ...) hay https://docs.python.org/3/library/configparser.html
+  và không push file này lên. Hoặc cách khác là sử dụng biến environment (truy
+  cập qua os.environ) https://docs.python.org/3/library/os.html#os.environ,
+  set biến environment:
+  http://www.tldp.org/LDP/Bash-Beginners-Guide/html/sect_03_02.html
+- Kết quả trả về thường được phân thành nhiều trang (thay vì trả về tất cả cùng 1 lúc), khái niệm này gọi là "paginator", lập trình viên cần viết code "sang trang" để lấy tiếp các kết quả khác. Chi tiết sẽ có trong tài liệu của
+  từng API, ví dụ StackExchange https://api.stackexchange.com/docs/paging
+- Một số trang như Google API trả về token không dùng được ngay, người dùng
+  phải sleep một tới vài giây mới requests tiếp được.
+- Khi crawl, nên tạo 1 requests Session để chứa thông tin liên quan giữa các requests thay vì dùng `requests.get` hay `requests.post` trực tiếp (VD: thông tin giúp đăng nhập vào website, rồi thực hiện crawl sau khi đăng nhập):
+
+  ```
+  ses = requests.Session()
+  # nên dùng timeout= số giây đợi trang web trả về response để tránh chương
+  # trình bị treo quá lâu nếu site không response chậm. VD 5s
+  resp = ses.get('https://awebsite.com/login', timeout=5)
+  # do something
+  resp = ses.post('https://awebsite.com/login', data={...}, timeout=5)
+  ```
+- Đọc thêm:
+- https://pp.pymi.vn/article/requests/
+- https://pp.pymi.vn/article/repl/
+- https://pymi.vn/blog/blog-markdown-pelican-githubpages/
+- https://pymi.vn/blog/augassign/
+- https://pymi.vn/blog/jupyter-notebook/
+
+Chuẩn bị cho buổi sau
+---------------------
+
+- Đăng ký LinkedIn, add (Không follow) linkedin giảng viên
+  https://www.linkedin.com/in/hvnsweeting và/hoặc
+  https://vn.linkedin.com/in/hoangthanhlong
+- Đăng ký nhận mail tin tức Python hàng tuần http://www.pythonweekly.com/
+- Xem tin Python trên https://hn.pymi.vn
+- Xem các bài viết tag Python trên http://www.familug.org/
+
+
+Test
+----
+
+Từ bài này trở đi, học viên tự viết test cho code của mình nếu muốn học
+viết test như đi làm chuyên nghiệp, tham khảo code test các bài từ 3->8 trong
+thư mục tests/. Không bắt buộc. Khi viết test, tách logic thành 1 function riêng
+và test phần logic, tránh test các hiệu ứng như kết nối mạng. Ví dụ bài 1 cần
+lấy JSON về rồi lọc ra các repository thì có thể copy 1 đoạn json gồm 2 repo
+cho vào file test, gọi function từ file code bài làm và kiểm tra function
+trả về list 2 phần tử. Không test kết nối đến trang GitHub.
+Các test cần tới các tài nguyên bên ngoài code thường được làm "giả" bằng
+khái niệm "mock" https://docs.python.org/3.6/library/unittest.mock.html
+Test học viên viết không yêu cầu mock.
+
+1
+-
+
+Viết 1 script để liệt kê tất cả các GitHub repository của 1 user:
+
+Ví dụ với user ``pymivn``, sử dụng dữ liệu ở JSON format tại
+https://api.github.com/users/pymivn/repos
+
+Câu lệnh của chương trình có dạng::
+
+  python3 githubrepos.py username
+
+Gợi ý:
+
+Sử dụng các thư viện:
+
+- requests
+- sys: https://docs.python.org/3.9/tutorial/stdlib.html#command-line-arguments
+- or argparse: https://docs.python.org/3.9/howto/argparse.html#introducing-positional-arguments
+
+
+2
+-
+
+Viết một script kiểm tra xem các số argument đầu vào có trúng lô không
+(2 số cuối trùng với một giải nào đó). Nếu không có argument nào thì print
+ra tất cả các giải từ đặc biệt -> giải 7.
+
+Lấy kết quả từ ``ketqua.net``.
+
+Dạng của câu lệnh::
+
+  ketqua.py [NUMBER1] [NUMBER2] [...]
+
+Các thư viện:
+
+- requests
+- requests_html hay beautifulsoup4 [tuỳ chọn]
+- argparse hay sys.argv
+
+Gợi ý:
+
+- ``nargs`` https://docs.python.org/2/library/argparse.html
+
+3
+-
+
+Viết script lấy top **N** câu hỏi được vote cao nhất của tag **LABEL** trên stackoverflow.com.
+In ra màn hình: Title câu hỏi, link đến câu trả lời được vote cao nhất
+
+Link API: https://api.stackexchange.com/docs
+
+Dạng của câu lệnh:
+
+  python3 so.py N LABEL
+
+4
+-
+
+Viết script tìm 50 quán bia / quán nhậu / quán bar / nhà hàng quanh toạ độ của lớp học (lên google map để lấy) với bán kính 2KM.
+Ghi kết quả theo định dạng JSON vào file pymi_beer.geojson
+
+Sử dụng Google Map API
+https://developers.google.com/places/web-service/
+
+Chú ý: phải tạo "token" để có thể truy cập API.
+
+Chú ý: giữa mỗi trang kết quả phải đợi để lấy tiếp.
+
+Chú ý: tránh đặt ngược lat/long
+
+- Kết quả trả về lưu theo format JSON, với mỗi điểm là một GeoJSON point (https://leafletjs.com/examples/geojson/), up file này lên GitHub để xem bản đồ kết quả.
+
+- Xem mẫu GEOJSON https://github.com/tung491/make_boba_map
+
+5
+-
+
+Viết script dùng API tạo 1 Trello board với 2 list "Thứ 3", "Thứ 5",
+và tạo 12 card ứng với 12 buổi học của lớp, có set due date ứng với các ngày
+học.
+
+Ví dụ kết quả: https://trello.com/b/yEskTV8S/h%E1%BB%8Dc-python-h%C3%A0-n%E1%BB%99i-pymivn-hn2006-timetable
+
+API: https://developer.atlassian.com/cloud/trello/guides/rest-api/api-introduction/
+
+https://developer.atlassian.com/cloud/trello/rest/#api-boards-post
+https://developer.atlassian.com/cloud/trello/rest/#api-lists-post
+https://developer.atlassian.com/cloud/trello/rest/#api-cards-post
+
+6
+-
+
+Lấy về tên và link các bài viết được nhiều điểm nhất với tự khóa SQL trên
+HackerNews: https://hn.algolia.com/?q=sql
+
+Sẽ không sử dùng được requests + bs4 nữa.
+
+Đọc thêm: với những website sử dụng JavaScript, Python chỉ xem đó là những đoạn
+text bình thường và không chạy code JavaScript.  Để chạy code JavaScript,
+Python thường phải gọi 1 chương trình khác (trình duyệt) để chạy code
+JavaScript, sau đó đọc kết quả được trả về xem
+https://github.com/kennethreitz/requests-html#javascript-support
+
+Hoặc sử dụng thư viện Selenium: http://selenium-python.readthedocs.io/
+
+Xem bài mẫu trong thư mục ex9/
+
+7
+-
+
+*Nâng cao* (có thể đã không còn làm được nữa do FB thay đổi)
+Sử dụng ``requests`` viết một script lấy toàn bộ thông tin các Page của
+các quán cafe, trà ở trung tâm Hà Nội bằng **Facebook Graph API**.
+
+Các từ khóa: ``"coffee", "tea", "cafe", "caphe", "tra da"``.
+
+Tọa độ: ``21.027875, 105.853654`` với bán kính là ``1km``.
+
+Trả về kết quả bao gồm ``name, id, location, website`` của mỗi Page.
+
+- Hướng dẫn dùng Facebook API:
+
+https://developers.facebook.com/docs/graph-api/using-graph-api#search
+
+- Sử dụng Grapth API Explorer để thử:
+
+https://developers.facebook.com/tools-and-support/
+
+- Sử dụng App ID và App Secret sau để lấy token:
+
+``App ID: 1537101179929447``
+
+``App Secret: 4da789d9de5f279a58051e629a4c6ef3``
+
+- Hướng dẫn tạo Token:
+
+https://developers.facebook.com/docs/facebook-login/access-tokens/#apptokens
+
+**Chú ý**:
+
+- Để ý đến phần paging của mỗi response trả về. Hãy bấm vào đó để xem chuyện gì
+sẽ xảy ra.
+
+- Kết quả trả về lưu theo format JSON, với mỗi điểm là một GeoJSON point
+  (https://leafletjs.com/examples/geojson/), rồi xuất ra một file
+  ``hanoi_coffee.geojson`` up file này lên GitHub để xem bản đồ kết quả.
+- Hãy sử dụng option ``indent`` cho function ``json.dump()``
+- Xem sản phẩm mẫu: https://github.com/tudoanh/python-facebook-bot.
+
+
+8
+-
+
+Đọc thêm: Scrapy là một FRAMEWORK chuyên cho crawl dữ liệu.  Nó khác với các
+thư viện đã sử dụng ở trên ở chỗ: các thư viện đó chỉ tham gia 1 công đoạn (bóc
+tách dữ liệu), còn Scrapy là một bộ đầy đủ công cụ cho các công đoạn - từ bắt
+đầu chạy (chạy song song? chạy theo giờ?) - cho tới crawl (như các thư viện
+trên) - cho tới hậu xử lý, lưu trữ dữ liệu. Scrapy phù hợp với các dự án crawl
+nhiều trang, nhiều công đoạn: https://scrapy.org/ Xem code crawl của
+http://jobs.pymi.vn/ tại https://github.com/pymivn/pyjobs_crawlers
+
+9
+-
+
+[Tham khảo] chạy code đồng thời - vd crawl nhiều trang cùng lúc - nên dùng
+sẵn framework đã lo sẵn mọi chuyện như "scrapy", đọc thêm các khái niệm sau
+để mở rộng hiểu biết:
+
+Concurrency: threading, multiprocess, asyncio
+
+- https://pymotw.com/3/concurrency.html
+- sync - async:
+  https://www.nginx.com/blog/inside-nginx-how-we-designed-for-performance-scale/

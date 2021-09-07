@@ -1,0 +1,9 @@
+requests # HTTP client
+flask # Web framework
+pandas # Statistics - requires Numpy
+seaborn # Beautiful plotting - require Scipy
+matplotlib # Plotting
+flake8 # PEP8 style checking + Flake check
+jupyter # IPython and Jupyter notebook
+sphinx # Build doc for this dir
+# black - python3.6+ only

@@ -1,0 +1,22 @@
+Nah! không có bài tập nào cả.
+
+Chúc mừng bạn đã kết thúc khóa học Python tại pymi.vn, giờ là lúc hoàn thiện
+bài tập 9, 10, 11 để chuẩn bị đi phỏng vấn, xin việc, kiếm tiền.
+
+- Tạo CV theo mẫu của Pymi tại: https://bit.ly/pymicv
+- Tạo tài khoản linkedin.com và connect với giảng viên: https://www.linkedin.com/in/hvnsweeting
+- Đọc hướng dẫn phỏng vấn: https://pp.pymi.vn/article/phongvan/
+
+## Luyện tập để phỏng vấn
+- HackerRank https://www.hackerrank.com/domains/python/py-introduction
+  Học viên nên làm trên 500 điểm.
+- Lấy chứng chỉ của HackerRank: xem bài 7.1 và 7.2
+- Làm tối thiểu 25 bài ProjectEuler https://projecteuler.net/
+- Hàng ngày làm bài tập trên https://exercism.io/my/tracks/python, theo practice mode và xem community solutions để so sánh.
+- Học thêm các kiến thức khác tùy chuyên ngành lựa chọn, xem bài tập 9, 10, 11.
+- Nhớ quan tâm đến sức khoẻ: https://www.familug.org/2014/06/suc-khoe-chuyen-muon-thuo.html#more
+- Nhớ review Pymi trên facebook https://www.facebook.com/pyfml/reviews
+
+Mọi hỏi đáp không liên quan đến bài tập vui lòng ra các channel public như #python hay #web hỏi, giờ các bạn đã ngang trình độ với những cựu học viên đang đi làm rồi.
+
+Good luck, have fun!

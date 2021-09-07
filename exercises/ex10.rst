@@ -1,0 +1,230 @@
+10. Web
+=======
+
+- Code sau khi hoàn thành, có thể cho "chạy thật", việc "chạy thật" này gọi là
+  "deployment" - triển khai cài đặt. Tài liệu Flask có hướng dẫn các option để
+  deploy Flask app: http://flask.pocoo.org/docs/0.12/deploying/
+- Xem hướng dẫn deploy trên Heroku: https://pymi.vn/blog/python-free-host/
+- Để phục vụ mục đích tạo profile đẹp, học viên nên làm cả bước deploy để có
+  các website chạy thật - người khác vào xem được, sau khi làm bài.
+- Viết các câu lệnh SQL về lâu dài sẽ trở thành 1 công việc nhàm chán (tạo/sửa
+  /xóa) hàng trăm object ... Khi làm việc với những ứng dụng như vậy, người
+  ta thường sử dụng một "thư viện" để chuyển đổi qua lại giữa SQL và Python
+  object và gọi là ORM (object relation map), Django có sẵn Django ORM, Flask
+  thường dùng SQLAlchemy.
+- Các sản phẩm của học viên PyMi tham khảo tại: https://github.com/pymivn/awesome
+- Các project của PyMi xem tại: https://github.com/pymivn/
+- Đọc https://pp.pymi.vn/article/djangovsflask/
+- Đọc https://gitlab.com/pyfml/pyfml/-/blob/master/exercises/ex10/database.md
+
+0
+-
+
+Làm 1 static blog:
+
+- Tải file này về giải nén https://gitlab.com/hvn_familug/pelican-blog/-/archive/master/pelican-blog-master.zip
+- Vào GitLab.com, đăng nhập, tạo 1 project mới  https://gitlab.com/projects/new > Blank project , chọn public > Create Project
+- Gõ các lệnh trong phần `Push an existing folder`, cd existing_folder thay bằng tên thư mục vừa giải nén. Ví dụ
+
+.. code-block:: sh
+
+  cd pelican-blog-master
+  git init
+  # thay đường dẫn sau bằng link project của bạn
+  git remote add origin https://gitlab.com/hvn_familug/pelican-blog.git
+  git add .
+  git commit -m "Initial commit"
+  git push -u origin master
+
+- Xem Menu tay trái > CI/CD > Run Pipeline
+- Xem web tại Menu tay trái > Settings > Pages. Ví dụ https://gitlab.com/hvn_familug/hoc-python-hanoi-tphcm/pages
+
+Xem hình hướng dẫn trong file ex10.png
+
+Đọc thêm tại https://pymi.vn/blog/blog-markdown-pelican-githubpages/
+
+1
+-
+Làm một website tuyển dụng.
+
+Lấy dữ liệu các job từ: https://github.com/awesome-jobs/vietnam/issues
+
+Lưu dữ liệu vào một bảng ``jobs`` trong SQLite. Xem ví dụ: https://docs.python.org/3/library/sqlite3.html
+
+Tạo website hiển thị danh sách các jobs khi vào đường dẫn ``/``.
+Khi bấm vào mỗi job (1 link), sẽ mở ra trang chi tiết về jobs (giống như trên
+các trang web tìm viêc).
+
+2
+-
+
+Crawl tất cả các bài viết có label
+Python(http://www.familug.org/search/label/Python), Command, sysadmin và 10 bài
+viết mới nhất ở homepage của http://www.familug.org/
+
+Tạo file `index.html`, chứa 4 cột tương ứng cho:
+
+```
+Python | Command | Sysadmin | Latest
+```
+
+Mỗi cột chứa các link bài viết, khi bấm vào sẽ mở ra bài gốc tại FAMILUG.org
+
+Tham khảo giao diện tại:
+- https://themes.getbootstrap.com/
+- http://getskeleton.com/#examples
+
+Push code lên GitLab repo, tạo 1 GitLab Page để view kết quả.
+https://pages.gitlab.io/
+
+Nâng cao: push code lên GitHub và tạo 1 GitHub Page: https://pages.github.com/
+
+3
+-
+
+Làm theo ví dụ tại https://flask.palletsprojects.com/en/1.1.x/tutorial/
+Push code cuối cùng lên GitHub.com<div></div>
+
+Nếu học Django, làm theo tutorial https://docs.djangoproject.com/en/2.2/intro/tutorial01/
+
+4
+-
+
+Learn SQL https://www.sqlteaching.com/
+
+5
+-
+
+Learn basic Javascript (free part) https://learnjavascript.online/app.html
+
+Phần từ đây trở đi để tham khảo cho học viên theo hướng lập trình web
+=====================================================================
+
+Learn SQL
+---------
+
+- SQL is MUST for web dev.
+- Concepts: CRUD (create/read/update/delete)
+- Foreign keys, JOIN
+- Aggregate functions (sum/min/max...), GROUP BY
+- Create index for speeding up
+- Learn to setup and use with Python a RDBMS (**Postgresql** or MySQL).
+- Learn to use an ORM (SQLalchemy/DjangoORM)
+
+Docs:
+
+- https://www.w3schools.com/sql/
+- 45mins -> 2hours: https://www.sqlteaching.com/
+- SQL intro https://www.kaggle.com/learn/intro-to-sql
+- SQL Advanced https://www.kaggle.com/learn/advanced-sql
+- https://sqlzoo.net/
+- https://www.khanacademy.org/computing/computer-programming/sql
+- Cài đặt postgresql (https://www.postgresql.org/) và pgadmin
+  (https://www.pgadmin.org/) lên máy rồi làm theo
+  https://www.postgresql.org/docs/9/tutorial.html
+
+JavaScript
+----------
+
+Dù muốn hay không, 1 lập trình viên web bắt buộc phải biết JavaScript, phần cơ
+bản tương tự như Python.
+
+If you learn this as good as Python, then they call you "full stack engineer"
+
+- https://www.familug.org/2017/04/hoc-javascript-1.html
+- Part2: https://gist.github.com/hvnsweeting/e26b6367bb0144d4ce3eaa04cfe3b94d
+- JS DOM https://pp.pymi.vn/article/jsdom/
+- https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Manipulating_documents
+- 30 mins -> 1h, free part - learn basic (lesson 1 2 3 of Pymi): https://learnjavascript.online/app.html
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Introduction
+- http://docs.webplatform.org/wiki/concepts/programming/programming_basics
+- https://vuejs.org/ or https://reactjs.org/
+- https://www.w3schools.com/JQuery/
+
+Flask Mega tutorial
+-------------------
+
+Nếu học Flask
+
+Hoàn thành tutorial: https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world
+
+Real world app
+--------------
+
+Tham khảo: https://github.com/gothinkster/flask-realworld-example-app
+
+Các thư viện thường dùng với Flask
+----------------------------------
+
+- http://flask-sqlalchemy.pocoo.org/ - SQLAlchemy cho Flask, thay vì
+  dùng SQLAlchemy trực tiếp. SQLAlchemy là một ORM - giúp biến đổi qua lại
+  giữa Python object và SQL record (row), giúp lập trình viên gọi method/function
+  thay vì viết câu lệnh SQL, giúp che đi đang dùng DB gì - khiến cho việc
+  thay đổi DB sau này, nếu có thực hiện sẽ dễ dàng hơn. Flask-sqlalchemy giúp
+  thực hiện một số công việc sẽ phải đụng tới nếu dùng FLask với SQLAlchemy
+  trực tiếp (app context...).
+- https://flask-migrate.readthedocs.io/en/latest/ - Migrate DB.
+  "Hình dáng" của các bảng dữ liệu SQL sẽ biến đổi theo thời gian, có lúc
+  cần thêm bảng mới, có lúc cần sửa cột, đổi kiểu... Qúa trình biến đổi hình
+  dáng các bảng sql này (thực hiện bằng cách chạy các câu lệnh SQL)
+  được gọi là "migration". SQLAlchemy không hỗ trợ quá trình này mà phải dùng
+  một thư viện khác tên là
+  `alembic <https://flask-migrate.readthedocs.io/en/latest/>`_ (cùng tác giả
+  SQLAlchemy). `flask-migrate`
+  thêm các câu lệnh cho flask giúp việc dùng `alembic` dễ dàng hơn.
+- https://flask-login.readthedocs.io/en/latest/ - User authentication.
+  Giúp quản lý đăng nhập user nếu trang web của bạn có user. (không phải
+  trang web nào cũng cần user - ví dụ trang báo chí).
+- https://github.com/marshmallow-code/marshmallow - giúp biến đổi qua lại
+  giữa Python object (e.g khi dùng ORM) thành các kiểu dữ liệu có sẵn của
+  Python (đặc biệt là dict, JSON khi viết API).
+
+Web developer learning path
+---------------------------
+
+Web developer = HTML + CSS + Javascript + Python framework
+
+Learn HTML (easiest):
+
+- https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Introduction
+- http://docs.webplatform.org/wiki/guides/the_basics_of_html
+- http://www.w3schools.com/html/default.asp
+
+Learn CSS (still easy):
+
+- https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started
+- http://docs.webplatform.org/wiki/css/tutorials
+
+Learn Flask (after you know what is HTML and CSS):
+
+- Follow tutorial: http://flask.pocoo.org/docs/tutorial/
+
+Learn SQL
+
+Learn Django (should learn after Flask):
+
+- https://www.djangoproject.com/start/
+- http://tutorial.djangogirls.org/en/index.html
+
+Learn Javascript
+
+Gửi các thông số (metric)
+-------------------------
+
+Đăng ký 1 tài khoản DataDog https://www.datadoghq.com sau đó cài đặt datadog
+agent lên máy mình.
+
+Gửi các thông số lên DataDog theo hướng dẫn tại:
+https://docs.datadoghq.com/guides/metrics/
+
+Quản lý event/exception tập trung
+---------------------------------
+
+Trong một webapp, luôn có các event xảy ra mà ta muốn theo dõi.
+Ví dụ: một người dùng đăng ký, một exception xảy ra ...
+Sentry là opensource webapp thực hiện quản lý các event này, giúp
+ta quản lý được các sự kiện xảy ra trong hệ thống. Thường dùng để quản lý các
+exception xảy ra trong code Python. Đăng ký tài khoản và thử viết code có
+exception xảy ra để xem chúng được quản lý trên web thế nào.
+
+https://docs.sentry.io/clients/python/
